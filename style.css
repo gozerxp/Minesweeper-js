@@ -1,0 +1,24 @@
+body {
+    background-color: rgb(0, 0, 0);
+    margin: 0 auto;
+    user-select: none;
+    overflow: hidden;
+}
+
+canvas {
+    display: block;
+}
+
+#game {
+    margin-top: 4px;
+    margin-bottom: 4px;
+    background-color: rgb(200, 150, 255);
+}
+
+#score, #title {
+    background-color: rgb(153, 0, 255);
+}
+
+#view {
+    padding: 4px;
+}
