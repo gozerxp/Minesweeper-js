@@ -130,6 +130,7 @@ export const draw = {
 
         let font_size = this.reduce_font(ctx, 'F', settings.font_size,  100);
 
+        ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
         ctx.fillStyle = flag_color;
         ctx.fillText(`F`, 20, 45);
 
