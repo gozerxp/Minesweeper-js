@@ -11,7 +11,7 @@ const game_mode = {
     0: {
         width: 9,
         height: 9,
-        mines: 2,
+        mines: 15,
     },
     1: {
         width: 16,
