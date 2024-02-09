@@ -12,11 +12,11 @@ canvas {
 #game {
     margin-top: 4px;
     margin-bottom: 4px;
-    background-color: rgb(200, 150, 255);
+    background-color: rgb(124, 178, 255);
 }
 
 #score, #title {
-    background-color: rgb(153, 0, 255);
+    background-color: rgb(35, 127, 255);;
 }
 
 #view {

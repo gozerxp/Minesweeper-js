@@ -25,12 +25,25 @@ font.load().then((font) => {
 });
 
 if (__touch_device__)
-    game_canvas.ontouchstart = (e) => input(game.game_array, e.pageX, e.pageY);
+    game_canvas.ontouchstart = (e) => input(game_ctx, game.game_array, e.pageX, e.pageY);
 else
-    game_canvas.onclick = (e) => input(game.game_array, e.clientX, e.clientY);
+    game_canvas.onclick = (e) => input(game_ctx, game.game_array, e.clientX, e.clientY);
 
 window.onresize = () => draw.resize_canvas(game_ctx, score_ctx, title_ctx);
 
-function input(array, x, y) {
+function input(ctx, array, x, y) {
+
+    const rows = array.length;
+    const columns = array[0].length;
+
+    const x_size = ctx.canvas.width / rows;
+    const y_size = ctx.canvas.height / columns;
+
+    x = parseInt((x - settings.padding)  / x_size);
+    y = parseInt((y - settings.bar_height - settings.padding * 2) / y_size);  
+
+    game.uncover_block(x, y);
+
+    draw.draw_game(ctx);
 
 }

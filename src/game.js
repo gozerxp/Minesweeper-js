@@ -2,26 +2,26 @@ const DIRECTIONS = [[-1, -1], [-1, 0], [-1, 1], [0, -1], [0, 1], [1, -1], [1, 0]
 
 const block = {
     is_mine: false,
-    flag: false,
+    flagged: false,
     uncovered: false,
     adjecent_mines: 0
 };
 
 const game_mode = {
     0: {
-        width: 8,
-        height: 8,
-        mines: 20,
+        width: 9,
+        height: 9,
+        mines: 10,
     },
     1: {
-        width: 15,
-        height: 15,
-        mines: 25,
+        width: 16,
+        height: 16,
+        mines: 40,
     },
     2: {
-        width: 25,
-        height: 25,
-        mines: 50,
+        width: 30,
+        height: 16,
+        mines: 99,
     },
 
     get_mode: function (num) {
@@ -30,7 +30,6 @@ const game_mode = {
 };
 
 export const game = {
-
     size: {
         width: 0,
         height: 0,
@@ -45,23 +44,19 @@ export const game = {
     game_array: [],
     mines: 0,
 
-    uncovered_count: 0,
     flag_count: 0,
     time: 0,
 
     reset: function () {
 
         const get_mode = game_mode[this.mode];
-
         this.time = 0;
-        this.uncovered_count = 0;
+        this.flag_count = 0;
         this.mines = get_mode.mines;
         this.size.update(get_mode.width, get_mode.height);
         this.game_array = this.reset_array(get_mode.width, get_mode.height);
         this.plant_mines(this.game_array, this.mines);
         this.count_adj_mines(this.game_array);
-
-        //console.log(this.game_array);
 
     },
 
@@ -81,8 +76,8 @@ export const game = {
 
     plant_mines: function(array, max_mines) {
 
-        const width = array[0].length;
-        const height = array.length;
+        const width = array.length;
+        const height = array[0].length;
         
         let planted = 0;
 
@@ -103,8 +98,8 @@ export const game = {
 
     count_adj_mines: function(array) {
 
-        const rows = array[0].length;
-        const columns = array.length;
+        const rows = array.length;
+        const columns = array[0].length;
 
         let count;
 
@@ -142,16 +137,46 @@ export const game = {
 
     uncover_block: function(x, y) {
 
-        if (this.game_array[x][y].uncovered) return;
+        const array = this.game_array;
+        const rows = array.length;
+        const columns = array[0].length;
 
-        this.game_array[x][y].uncovered = true;
-        this.uncovered_count++;
+        if (array[x][y].uncovered) 
+            return;
+
+        array[x][y].uncovered = true;
+
+        if (array[x][y].adjecent_mines === 0 && !array[x][y].is_mine) {
+            array = spread_empty_cells(array, x, y, rows, columns);
+            return;
+        }
 
         //tripped mine
-        if (this.game_array[x][y].is_mine) {
+        if (array[x][y].is_mine) {
             this.game_over();
             return;
         }
 
     }
 };
+
+function spread_empty_cells (array, x, y, rows, columns) {
+
+    for (let z = 0; z < DIRECTIONS.length; z++) {
+
+        let dir_x = x + DIRECTIONS[z][0];
+        let dir_y = y + DIRECTIONS[z][1];
+
+        if (dir_x < 0 || dir_x >= rows || dir_y < 0 || dir_y >= columns)
+            continue;
+
+        array[dir_x][dir_y].uncovered = true; 
+
+        //if new cell is also blank then run function recursively
+        if (array[dir_x][dir_y].adjecent_mines === 0 && !array[dir_x][dir_y].is_mine)
+            array = spread_empty_cells(array, dir_x, dir_y, rows, columns);
+    }
+
+    return array;
+
+}
