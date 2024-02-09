@@ -31,7 +31,7 @@ export const draw = {
 
         const offset = 2;
 
-        let font_size = this.reduce_font(ctx, title, settings.font_size, ctx.canvas.width / 1.25);
+        let font_size = this.reduce_font(ctx, title, settings.font_size, ctx.canvas.width / 1);
 
         ctx.font = `${font_size}px '${settings.font_face}'`;
 
