@@ -39,10 +39,10 @@ function input(ctx, array, x, y) {
     const x_size = ctx.canvas.width / rows;
     const y_size = ctx.canvas.height / columns;
 
-    x = parseInt((x - settings.padding)  / x_size);
-    y = parseInt((y - settings.bar_height - settings.padding * 2) / y_size);  
+    const grid_x = parseInt((x - settings.padding)  / x_size);
+    const grid_y = parseInt((y - settings.bar_height - settings.padding * 2) / y_size);  
 
-    game.uncover_block(x, y);
+    game.uncover_cell(grid_x, grid_y);
 
     draw.draw_game(ctx);
 
