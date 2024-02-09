@@ -21,11 +21,21 @@ const game_mode = {
     2: {
         width: 30,
         height: 16,
-        mines: 99,
+        mines: 50,
     },
 
-    get_mode: function (num) {
-        return this[num];
+    current_mode: 0,
+
+    change_mode: function(new_mode) {
+
+        if (new_mode < 0 || new_mode > 2)
+            return;
+
+        this.current_mode = new_mode;
+    },
+
+    get_mode: function () {
+        return this[this.current_mode];
     }
 };
 
@@ -40,19 +50,18 @@ export const game = {
         }
     },
 
-    mode: 0,
-
     game_array: [],
     mines: 0,
 
     time: 0,
     first_move: true,
     game_over: false,
+    flag_mode: false,
 
     reset: function () {
 
         console.clear();
-        const get_mode = game_mode[this.mode];
+        const get_mode = game_mode.get_mode();
         this.time = 0;
         this.first_move = true;
         this.game_over = false;
@@ -144,6 +153,11 @@ export const game = {
         const array = this.game_array;
         const rows = array.length;
         const columns = array[0].length;
+
+        if (this.flag_mode) {
+            array[x][y].flagged = !array[x][y].flagged;
+            return;
+        }
 
         //don't uncover a flagged cell
         //flag must manually be removed first.
@@ -257,10 +271,15 @@ function spread_empty_cells (array, x, y, rows, columns) {
             if (array[dir_x][dir_y].uncovered)
                 continue;
 
+            if (array[dir_x][dir_y].flagged)
+                continue;
+
             array[dir_x][dir_y].uncovered = true; 
 
             //if new cell is also blank then add it to the list
-            if (array[dir_x][dir_y].adjecent_mines === 0 && !array[dir_x][dir_y].is_mine)
+            if (array[dir_x][dir_y].adjecent_mines === 0 
+                && !array[dir_x][dir_y].is_mine
+                && !array[dir_x][dir_y].flagged)
                 empty_cells.push([dir_x, dir_y]);;
             
         }
