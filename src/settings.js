@@ -11,7 +11,7 @@ export const settings = {
     font_face: "Sixtyfour",
     font_color: "black",
     grid_color: "black",
-    font_size: 40,
+    font_size: 34,
 
     block_color: "rgb(50, 125, 200)",
     hover_color: "rgb(75, 150, 225)",

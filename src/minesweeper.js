@@ -73,6 +73,9 @@ function input(ctx, array, x, y) {
     }
 
     draw.draw_game(ctx);
+    
+    if (alert.active)
+        alert.draw();
 
 }
 

@@ -24,10 +24,10 @@ const game_mode = {
     2: {
         width: 30,
         height: 16,
-        mines: 20,
+        mines: 99,
     },
 
-    current_mode: 0,
+    current_mode: 2,
 
     change_mode: function (new_mode) {
 
@@ -39,6 +39,19 @@ const game_mode = {
 
     get_mode: function () {
         return this[this.current_mode];
+    },
+
+    get_mode_txt: function() {
+        switch(this.current_mode) {
+            case 0:
+                return "Easy";
+            case 1:
+                return "Intermediate";
+            case 2:
+                return "Expert";
+            default:
+                return "Custom";
+        }
     }
 };
 
@@ -108,6 +121,8 @@ export const game = {
             }
 
         } while (planted < max_mines)
+
+
 
     },
 

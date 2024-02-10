@@ -21,7 +21,7 @@ export const alert = {
 
         ctx.font = `${settings.font_size}px '${settings.font_face}'`;
 
-        let font_size = draw.reduce_font(ctx, txt, settings.font_size, ctx.canvas.width / 1.3 - margin);
+        let font_size = draw.reduce_font(ctx, txt, settings.font_size, ctx.canvas.width / 1.2 - margin);
 
         const w = ctx.measureText(`${txt}`).width;
         let h = font_size;

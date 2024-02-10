@@ -34,9 +34,9 @@ export const draw = {
 
         const title = settings.title;
 
-        const offset = 2;
+        const offset = 3;
 
-        let font_size = this.reduce_font(ctx, title, settings.font_size, ctx.canvas.width / 1.10);
+        let font_size = this.reduce_font(ctx, title, settings.font_size, ctx.canvas.width / 1.15);
 
         ctx.font = `${font_size}px '${settings.font_face}'`;
 
@@ -111,9 +111,6 @@ export const draw = {
 
             }
         }
-
-        if (alert.active)
-            alert.draw();
 
     },
 
