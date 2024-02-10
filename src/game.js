@@ -1,3 +1,5 @@
+import { alert } from "./alert.js";
+
 const DIRECTIONS = [[-1, -1], [-1, 0], [-1, 1], [0, -1], [0, 1], [1, -1], [1, 0], [1, 1]];
 
 const cell = {
@@ -8,6 +10,7 @@ const cell = {
 };
 
 const game_mode = {
+
     0: {
         width: 9,
         height: 9,
@@ -21,12 +24,12 @@ const game_mode = {
     2: {
         width: 30,
         height: 16,
-        mines: 50,
+        mines: 20,
     },
 
     current_mode: 0,
 
-    change_mode: function(new_mode) {
+    change_mode: function (new_mode) {
 
         if (new_mode < 0 || new_mode > 2)
             return;
@@ -95,8 +98,8 @@ export const game = {
 
         do {
             //randomize placement
-            const x = Math.floor(Math.random() * width);
-            const y = Math.floor(Math.random() * height);
+            let x = Math.floor(Math.random() * width);
+            let y = Math.floor(Math.random() * height);
 
             //make sure it's not already a mine.
             if (!array[x][y].is_mine) {
@@ -147,6 +150,7 @@ export const game = {
 
         if (this.game_over) {
             this.reset();
+            alert.active = false;
             return;
         }
 
@@ -189,6 +193,7 @@ export const game = {
             this.game_over = true;
             this.uncover_mines(array);
             console.log("Game Over!");
+            alert.draw(["Game Over!"]);
             return;
         }
 
@@ -211,6 +216,7 @@ export const game = {
 
         if (flag) {
             console.log("You win!");
+            alert.draw(["You win!"]);
             this.game_over = true;
         }
 

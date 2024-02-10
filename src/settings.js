@@ -3,7 +3,7 @@ export const settings = {
 
     bar_height: 55,
     min_height: 400,
-    max_width: 1250,
+    max_width: 900,
     padding: 4,
 
     title: "Minesweeper.js",
@@ -15,6 +15,9 @@ export const settings = {
 
     block_color: "rgb(50, 125, 200)",
     hover_color: "rgb(75, 150, 225)",
+    alert_color: "black",
+    alpha: .75,
+    corner_radius: 15,
 
     colors: {
         1: "blue",
@@ -30,4 +33,6 @@ export const settings = {
             return this[num];
         }
     }
+    
 };
+

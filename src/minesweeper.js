@@ -1,9 +1,10 @@
 import { game } from "./game.js";
 import { draw } from "./draw.js";
 import { settings } from "./settings.js";
+import { alert } from "./alert.js";
 
 const game_canvas = document.getElementById("game");
-const game_ctx = game_canvas.getContext("2d");
+export const game_ctx = game_canvas.getContext("2d");
 
 const score_canvas = document.getElementById("score");
 const score_ctx = score_canvas.getContext("2d");
@@ -50,7 +51,7 @@ function toggle_flag(ctx, x, y) {
 
 function hover(ctx, array, x, y) {
 
-    if (game.game_over) 
+    if (game.game_over || alert.active) 
         return;
 
     const mouse_position = get_mouse_coordinates(ctx, array, x, y);
@@ -60,8 +61,17 @@ function hover(ctx, array, x, y) {
 
 function input(ctx, array, x, y) {
 
-    const mouse_position = get_mouse_coordinates(ctx, array, x, y);
-    game.uncover_cell(mouse_position.x, mouse_position.y);
+    if (alert.active) {
+    
+        alert.active = false;
+    
+    } else {
+
+        const mouse_position = get_mouse_coordinates(ctx, array, x, y);
+        game.uncover_cell(mouse_position.x, mouse_position.y);
+
+    }
+
     draw.draw_game(ctx);
 
 }

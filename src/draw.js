@@ -1,5 +1,6 @@
 import { settings } from "./settings.js";
 import { game } from "./game.js";
+import { alert } from "./alert.js";
 
 const hover_pos = {
     x: null,
@@ -22,6 +23,10 @@ export const draw = {
         this.draw_titlebar(title_ctx);
         this.draw_flag_toggle(score_ctx);
         this.draw_game(game_ctx);
+
+        if (alert.active) {
+            alert.draw();
+        }
 
     },
 
@@ -58,7 +63,7 @@ export const draw = {
         const x_size = ctx.canvas.width / game.size.width;
         const y_size = ctx.canvas.height / game.size.height;
 
-        let font_size = this.reduce_font(ctx, '#', settings.font_size,  x_size / 1.5);
+        let font_size = this.reduce_font(ctx, '#', settings.font_size,  x_size / 2.5);
 
         ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
 
@@ -107,6 +112,9 @@ export const draw = {
             }
         }
 
+        if (alert.active)
+            alert.draw();
+
     },
 
     draw_cell_flag: function (ctx, x, y) {
@@ -114,7 +122,7 @@ export const draw = {
         const x_size = ctx.canvas.width / game.size.width;
         const y_size = ctx.canvas.height / game.size.height;
 
-        let font_size = this.reduce_font(ctx, '#', settings.font_size,  x_size / 1.5);
+        let font_size = this.reduce_font(ctx, '#', settings.font_size,  x_size / 2.5);
 
         let x_pos = x * x_size + x_size / 2 - ctx.measureText('#').width / 2;
         let y_pos = y * y_size + y_size / 2 + font_size / 2;
