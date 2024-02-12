@@ -75,8 +75,10 @@ export const game = {
 
         do {
             //randomize placement
-            let x = Math.floor(Math.random() * width);
-            let y = Math.floor(Math.random() * height);
+            let random_num = Math.floor(Math.random() * (width * height));
+
+            let x = Math.floor(random_num / height);
+            let y = random_num % height;
 
             //make sure it's not already a mine.
             if (!array[x][y].is_mine) {
@@ -210,15 +212,11 @@ export const game = {
         const columns = this.size.height;
 
         //if first move is a mine, move it to the first available cell
-        if (array[x][y].is_mine) {
-            for (let xx = 0; xx < rows; xx++) {
-                for (let yy = 0; yy < columns; yy++) {
-                    if (!array[xx][yy].is_mine)
-                        array[x][y].is_mine = false
-                        array[xx][yy].is_mine = true;
-                        break;
-                }
-            }
+        while (array[x][y].is_mine) {
+
+            array[x][y].is_mine = false;
+            this.plant_mines(array, 1);
+
         }
 
         //now we can count adjacent mines

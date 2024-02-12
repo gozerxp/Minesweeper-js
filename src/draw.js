@@ -84,6 +84,7 @@ export const draw = {
                                             && game.tripped_mine.y ===y ?
                                                 settings.explode_color : settings.uncovered_mine_color;
                         ctx.fillRect(x * x_size, y * y_size, x_size, y_size);
+                        
                         ctx.fillStyle = "black";
                         ctx.fillText(`B`, x_pos, y_pos);
                     }

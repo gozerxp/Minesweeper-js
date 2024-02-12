@@ -1,3 +1,9 @@
+/*
+Written by Dan Andersen
+2024 Gozerxp Software
+http://www.gozerxp.com
+*/
+
 import { game } from "./game.js";
 import { draw } from "./draw.js";
 import { settings } from "./settings.js";
