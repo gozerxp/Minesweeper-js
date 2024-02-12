@@ -16,6 +16,8 @@ export const settings = {
 
     block_color: "rgb(50, 125, 200)",
     hover_color: "rgb(75, 150, 225)",
+    explode_color: "red",
+    uncovered_mine_color: "darkorange",
     alert_color: "black",
     alpha: .75,
     corner_radius: 15,

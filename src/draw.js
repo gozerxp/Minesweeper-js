@@ -60,11 +60,11 @@ export const draw = {
 
         const array = game.game_array;
 
-        const rows = array.length;
-        const columns = array[0].length;
+        const rows = game.size.width;
+        const columns = game.size.height;
 
-        const x_size = ctx.canvas.width / game.size.width;
-        const y_size = ctx.canvas.height / game.size.height;
+        const x_size = ctx.canvas.width / rows;
+        const y_size = ctx.canvas.height / columns;
 
         let font_size = this.reduce_font(ctx, '#', settings.font_size,  x_size / 2.5);
 
@@ -80,7 +80,9 @@ export const draw = {
                 
                     if (array[x][y].is_mine) {
                         //draw mine
-                        ctx.fillStyle = "red";
+                        ctx.fillStyle = game.tripped_mine.x === x 
+                                            && game.tripped_mine.y ===y ?
+                                                settings.explode_color : settings.uncovered_mine_color;
                         ctx.fillRect(x * x_size, y * y_size, x_size, y_size);
                         ctx.fillStyle = "black";
                         ctx.fillText(`B`, x_pos, y_pos);
@@ -95,8 +97,10 @@ export const draw = {
                 
                 } else { 
                     
-                    ctx.fillStyle = x !== hover_pos.x || y !== hover_pos.y ? 
-                        settings.block_color : settings.hover_color;
+                    ctx.fillStyle = x !== hover_pos.x 
+                                        || y !== hover_pos.y 
+                                            || array[x][y].flagged ? 
+                                                settings.block_color : settings.hover_color;
                     ctx.fillRect(x * x_size, y * y_size, x_size, y_size);
 
                     if (array[x][y].flagged) {
@@ -148,20 +152,21 @@ export const draw = {
 
         const txt = `B: ${game.mines_left}`;
         const offset = settings.offset;
-        const padding = settings.padding;
 
         const w = ctx.measureText(txt).width;
         const center_pos = ctx.canvas.width / 2 - w / 2;
 
         const font_size = this.reduce_font(ctx, txt, settings.font_size,  ctx.canvas.width / 2);
 
-        ctx.clearRect(center_pos - padding * 2, 0, w + padding * 5, ctx.canvas.height);
+        ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
 
         ctx.fillStyle = settings.font_color;
         ctx.fillText(txt, center_pos, 42);
 
         ctx.fillStyle = "white";
         ctx.fillText(txt, center_pos + offset, 42 + offset);
+
+        this.draw_flag_toggle(ctx);
 
     },
 
@@ -170,9 +175,6 @@ export const draw = {
         let cell_x, cell_y;
 
         const array = game.game_array;
-
-        const rows = array.length;
-        const columns = array[0].length;
 
         const x_size = ctx.canvas.width / game.size.width;
         const y_size = ctx.canvas.height / game.size.height;
@@ -199,7 +201,7 @@ export const draw = {
 
             }
 
-            if (!array[x][y].uncovered) {
+            if (!array[x][y].uncovered && !array[x][y].flagged) {
 
                 cell_x = x * x_size;
                 cell_y = y * y_size;

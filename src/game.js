@@ -29,6 +29,13 @@ export const game = {
     game_over: false,
     flag_mode: false,
 
+    // these coordinates are used to highlight 
+    // the mine that lost the game.
+    tripped_mine: {
+                    x: null, 
+                    y: null
+                },
+
     reset: function () {
 
         console.clear();
@@ -37,6 +44,8 @@ export const game = {
         this.game_over = false;
         this.mines = get_mode.mines;
         this.mines_left = this.mines;
+        this.tripped_mine.x = null;
+        this.tripped_mine.y = null;
         this.size.update(get_mode.width, get_mode.height);
         this.game_array = this.reset_array(get_mode.width, get_mode.height);
         this.plant_mines(this.game_array, this.mines);
@@ -127,6 +136,9 @@ export const game = {
         const columns = this.size.height;
 
         if (this.flag_mode) {
+
+            if (array[x][y].uncovered) return;
+
             array[x][y].flagged = !array[x][y].flagged;
             this.mines_left += array[x][y].flagged ? -1 : 1; 
             return;
@@ -160,6 +172,8 @@ export const game = {
 
         if (array[x][y].is_mine) {
             this.game_over = true;
+            this.tripped_mine.x = x;
+            this.tripped_mine.y = y;
             this.uncover_mines(array);
             alert.draw(["Game Over!"]);
             return;
