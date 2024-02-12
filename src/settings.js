@@ -8,7 +8,8 @@ export const settings = {
 
     title: "Minesweeper.js",
 
-    font_face: "Sixtyfour",
+    title_font: "Sixtyfour",
+    symbol_font: "NotoSans",
     font_color: "black",
     grid_color: "black",
     font_size: 34,
@@ -21,6 +22,9 @@ export const settings = {
     alert_color: "black",
     alpha: .75,
     corner_radius: 15,
+
+    mine_symbol: '🕱',
+    flag_symbol: '🏲',
 
     colors: {
         1: "blue",

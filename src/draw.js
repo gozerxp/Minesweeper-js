@@ -39,9 +39,7 @@ export const draw = {
 
         const offset = settings.offset;
 
-        let font_size = this.reduce_font(ctx, title, settings.font_size, ctx.canvas.width / 1.15);
-
-        ctx.font = `${font_size}px '${settings.font_face}'`;
+        let font_size = this.reduce_font(ctx, title, settings.font_size, settings.title_font, ctx.canvas.width / 1.15);
 
         let y = (ctx.canvas.height / 2) + font_size / 3;
         let x = ctx.canvas.width / 2 - (ctx.measureText(title).width / 2);
@@ -66,13 +64,14 @@ export const draw = {
         const x_size = ctx.canvas.width / rows;
         const y_size = ctx.canvas.height / columns;
 
-        let font_size = this.reduce_font(ctx, '#', settings.font_size,  x_size / 2.5);
+        let font_size = this.reduce_font(ctx, '#', settings.font_size, settings.title_font, x_size / 2.5);
 
         ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
 
         for (let x = 0; x < rows; x++) {
             for (let y = 0; y < columns; y++) {
 
+                ctx.font = `${font_size}px '${settings.title_font}'`
                 let x_pos = x * x_size + x_size / 2 - ctx.measureText('#').width / 2;
                 let y_pos = y * y_size + y_size / 2 + font_size / 2;
 
@@ -86,10 +85,14 @@ export const draw = {
                         ctx.fillRect(x * x_size, y * y_size, x_size, y_size);
                         
                         ctx.fillStyle = "black";
-                        ctx.fillText(`B`, x_pos, y_pos);
+
+                        const font_increase = 15;
+                        ctx.font = `${font_size + font_increase}px '${settings.symbol_font}'`;
+                        ctx.fillText(settings.mine_symbol, x_pos - (font_increase / 2), y_pos + (font_increase / 4));
+
                     }
 
-                    if (array[x][y].adjecent_mines > 0) {
+                    else if (array[x][y].adjecent_mines > 0) {
                         //draw number
                         let num = array[x][y].adjecent_mines;
                         ctx.fillStyle = settings.colors.get_color(num);
@@ -127,13 +130,13 @@ export const draw = {
         const x_size = ctx.canvas.width / game.size.width;
         const y_size = ctx.canvas.height / game.size.height;
 
-        let font_size = this.reduce_font(ctx, '#', settings.font_size,  x_size / 2.5);
+        let font_size = this.reduce_font(ctx, settings.flag_symbol, settings.font_size, settings.symbol_font, x_size / 2.5);
 
-        let x_pos = x * x_size + x_size / 2 - ctx.measureText('#').width / 2;
-        let y_pos = y * y_size + y_size / 2 + font_size / 2;
+        let x_pos = x * x_size + x_size / 2 - ctx.measureText(settings.flag_symbol).width / 2;
+        let y_pos = y * y_size + y_size / 2 + font_size / 2.5;
 
         ctx.fillStyle = "red";
-        ctx.fillText(`F`, x_pos, y_pos);
+        ctx.fillText(settings.flag_symbol, x_pos, y_pos);
 
     },
 
@@ -141,33 +144,49 @@ export const draw = {
 
         const flag_color = game.flag_mode ? "red" : settings.font_color;
 
-        const font_size = this.reduce_font(ctx, 'F', settings.font_size,  100);
+        const font_size = this.reduce_font(ctx, settings.flag_symbol, settings.font_size, settings.symbol_font, 100);
 
         ctx.clearRect(0, 0, 100, ctx.canvas.height);
         ctx.fillStyle = flag_color;
-        ctx.fillText(`F`, 20, 42);
+        ctx.fillText(settings.flag_symbol, 20, 42);
 
     },
 
     draw_mines_left (ctx) {
 
-        const txt = `B: ${game.mines_left}`;
+        const txt = `${settings.mine_symbol} ${this.generate_font_numbers(game.mines_left)}`;
         const offset = settings.offset;
+
+        const font_size = this.reduce_font(ctx, txt, settings.font_size, settings.symbol_font, ctx.canvas.width / 2);
 
         const w = ctx.measureText(txt).width;
         const center_pos = ctx.canvas.width / 2 - w / 2;
 
-        const font_size = this.reduce_font(ctx, txt, settings.font_size,  ctx.canvas.width / 2);
-
         ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
 
         ctx.fillStyle = settings.font_color;
-        ctx.fillText(txt, center_pos, 42);
+        ctx.fillText(txt, center_pos, 40);
 
-        ctx.fillStyle = "white";
-        ctx.fillText(txt, center_pos + offset, 42 + offset);
+        //ctx.fillStyle = "white";
+        //ctx.fillText(txt, center_pos + offset, 42 + offset);
 
         this.draw_flag_toggle(ctx);
+
+    },
+
+    generate_font_numbers(num) {
+
+        const txt_numbers = ['🯰', '🯱', '🯲', '🯳', '🯴', '🯵', '🯶', '🯷', '🯸', '🯹'];
+
+        const num_str = num.toString();
+
+        let new_txt = '';
+
+        for(const char of num_str) {
+            new_txt += txt_numbers[parseInt(char)];
+        }
+
+        return new_txt;
 
     },
 
@@ -236,13 +255,13 @@ export const draw = {
 
     },
 
-    reduce_font: function (ctx, text, font_size, max_size) {
+    reduce_font: function (ctx, text, font_size, font_face, max_size) {
 
-        ctx.font = `${font_size}px '${settings.font_face}'`;
+        ctx.font = `${font_size}px '${font_face}'`;
 
         while (ctx.measureText(text).width > max_size) {
             font_size--;
-            ctx.font = `${font_size}px  '${settings.font_face}'`;
+            ctx.font = `${font_size}px  '${font_face}'`;
         }
 
         return font_size;

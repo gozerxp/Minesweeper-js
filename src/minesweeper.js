@@ -23,12 +23,18 @@ const __touch_device__ = window.ontouchstart !== undefined;
 
 game.reset();
 
-const font = new FontFace(`${settings.font_face}`, `url(./assets/${settings.font_face}.ttf)`);
+const font = new FontFace(`${settings.title_font}`, `url(./assets/${settings.title_font}.ttf)`);
+const font2 = new FontFace(`${settings.symbol_font}`, `url(./assets/${settings.symbol_font}.ttf)`);
 
 font.load().then((font) => {
     document.fonts.add(font);
     draw.resize_canvas(game_ctx, score_ctx, title_ctx);
     draw.draw_game(game_ctx);
+});
+
+font2.load().then((font) => {
+    document.fonts.add(font);
+    draw.draw_mines_left(score_ctx);
 });
 
 if (__touch_device__) {
