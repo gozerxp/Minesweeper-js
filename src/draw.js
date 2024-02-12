@@ -11,8 +11,10 @@ export const draw = {
     
     resize_canvas: function (game_ctx, score_ctx, title_ctx) {
 
+        const aspect_ratio = game.size.width / game.size.height;
+
         game_ctx.canvas.height = Math.max(window.innerHeight - settings.bar_height * 2 - settings.padding * 4, settings.min_height);
-        game_ctx.canvas.width = Math.min(settings.max_width, window.innerWidth - settings.padding * 2);
+        game_ctx.canvas.width = Math.min(game_ctx.canvas.height * aspect_ratio, window.innerWidth - settings.padding * 2);
 
         score_ctx.canvas.width = game_ctx.canvas.width;
         score_ctx.canvas.height = settings.bar_height;
@@ -137,7 +139,7 @@ export const draw = {
 
         ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
         ctx.fillStyle = flag_color;
-        ctx.fillText(`F`, 20, 45);
+        ctx.fillText(`F`, 20, 42);
 
     },
 

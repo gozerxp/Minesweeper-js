@@ -3,7 +3,7 @@ export const settings = {
 
     bar_height: 55,
     min_height: 400,
-    max_width: 900,
+    max_width: 1200,
     padding: 4,
 
     title: "Minesweeper.js",

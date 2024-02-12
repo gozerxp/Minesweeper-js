@@ -1,4 +1,5 @@
 import { alert } from "./alert.js";
+import { game_mode } from "./game_mode.js";
 
 const DIRECTIONS = [[-1, -1], [-1, 0], [-1, 1], [0, -1], [0, 1], [1, -1], [1, 0], [1, 1]];
 
@@ -7,52 +8,6 @@ const cell = {
     flagged: false,
     uncovered: false,
     adjecent_mines: 0
-};
-
-const game_mode = {
-
-    0: {
-        width: 9,
-        height: 9,
-        mines: 15,
-    },
-    1: {
-        width: 16,
-        height: 16,
-        mines: 40,
-    },
-    2: {
-        width: 30,
-        height: 16,
-        mines: 99,
-    },
-
-    current_mode: 2,
-
-    change_mode: function (new_mode) {
-
-        if (new_mode < 0 || new_mode > 2)
-            return;
-
-        this.current_mode = new_mode;
-    },
-
-    get_mode: function () {
-        return this[this.current_mode];
-    },
-
-    get_mode_txt: function() {
-        switch(this.current_mode) {
-            case 0:
-                return "Easy";
-            case 1:
-                return "Intermediate";
-            case 2:
-                return "Expert";
-            default:
-                return "Custom";
-        }
-    }
 };
 
 export const game = {
@@ -104,8 +59,8 @@ export const game = {
 
     plant_mines: function(array, max_mines) {
 
-        const width = array.length;
-        const height = array[0].length;
+        const width = this.size.width;
+        const height = this.size.height;
         
         let planted = 0;
 
@@ -122,14 +77,12 @@ export const game = {
 
         } while (planted < max_mines)
 
-
-
     },
 
     count_adj_mines: function(array) {
 
-        const rows = array.length;
-        const columns = array[0].length;
+        const rows = this.size.width;
+        const columns = this.size.height;
 
         let count;
 
@@ -170,8 +123,8 @@ export const game = {
         }
 
         const array = this.game_array;
-        const rows = array.length;
-        const columns = array[0].length;
+        const rows = this.size.width;
+        const columns = this.size.height;
 
         if (this.flag_mode) {
             array[x][y].flagged = !array[x][y].flagged;
@@ -207,15 +160,14 @@ export const game = {
         if (array[x][y].is_mine) {
             this.game_over = true;
             this.uncover_mines(array);
-            console.log("Game Over!");
             alert.draw(["Game Over!"]);
             return;
         }
 
         let flag = true;
 
-        const rows = array.length;
-        const columns = array[0].length;
+        const rows = this.size.width;
+        const columns = this.size.height;
 
         for (let xx = 0; xx < rows; xx++) {
             for (let yy = 0; yy < columns; yy++) {
@@ -230,7 +182,6 @@ export const game = {
         }
 
         if (flag) {
-            console.log("You win!");
             alert.draw(["You win!"]);
             this.game_over = true;
         }
@@ -240,8 +191,8 @@ export const game = {
 
     check_first_move: function(array, x, y) {
 
-        const rows = array.length;
-        const columns = array[0].length;
+        const rows = this.size.width;
+        const columns = this.size.height;
 
         //if first move is a mine, move it to the first available cell
         if (array[x][y].is_mine) {
@@ -262,8 +213,8 @@ export const game = {
 
     uncover_mines: function (array) {
 
-        const rows = array.length;
-        const columns = array[0].length;
+        const rows = this.size.width;
+        const columns = this.size.height;
 
         for (let x = 0; x < rows; x++) {
             for (let y = 0; y < columns; y++) {
