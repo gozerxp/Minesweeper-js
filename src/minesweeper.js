@@ -29,7 +29,7 @@ if (__touch_device__) {
     game_canvas.ontouchstart = (e) => input(game_ctx, game.game_array, e.pageX, e.pageY);
     score_canvas.ontouchstart = (e) => toggle_flag(score_ctx, e.pageX, e.pageY);
 } else {
-    game_canvas.onclick = (e) => input(game_ctx, game.game_array, e.clientX, e.clientY, e.button);
+    game_canvas.onclick = (e) => input(game_ctx, game.game_array, e.clientX, e.clientY);
     game_canvas.onmousemove = (e) => hover(game_ctx, game.game_array, e.clientX, e.clientY);
     score_canvas.onclick = (e) => toggle_flag(score_ctx, e.clientX, e.clientY);
 }
@@ -59,9 +59,7 @@ function hover(ctx, array, x, y) {
 
 }
 
-function input(ctx, array, x, y, button = 0) {
-
-    console.log(button);
+function input(ctx, array, x, y) {
 
     if (alert.active) {
     
@@ -75,6 +73,7 @@ function input(ctx, array, x, y, button = 0) {
     }
 
     draw.draw_game(ctx);
+    draw.draw_mines_left(score_ctx);
     
     if (alert.active)
         alert.draw();

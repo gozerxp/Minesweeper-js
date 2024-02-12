@@ -23,8 +23,8 @@ export const game = {
 
     game_array: [],
     mines: 0,
+    mines_left: 0,
 
-    time: 0,
     first_move: true,
     game_over: false,
     flag_mode: false,
@@ -33,10 +33,10 @@ export const game = {
 
         console.clear();
         const get_mode = game_mode.get_mode();
-        this.time = 0;
         this.first_move = true;
         this.game_over = false;
         this.mines = get_mode.mines;
+        this.mines_left = this.mines;
         this.size.update(get_mode.width, get_mode.height);
         this.game_array = this.reset_array(get_mode.width, get_mode.height);
         this.plant_mines(this.game_array, this.mines);
@@ -128,6 +128,7 @@ export const game = {
 
         if (this.flag_mode) {
             array[x][y].flagged = !array[x][y].flagged;
+            this.mines_left += array[x][y].flagged ? -1 : 1; 
             return;
         }
 

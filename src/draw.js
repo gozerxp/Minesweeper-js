@@ -24,6 +24,7 @@ export const draw = {
 
         this.draw_titlebar(title_ctx);
         this.draw_flag_toggle(score_ctx);
+        this.draw_mines_left(score_ctx)
         this.draw_game(game_ctx);
 
         if (alert.active) {
@@ -36,7 +37,7 @@ export const draw = {
 
         const title = settings.title;
 
-        const offset = 3;
+        const offset = settings.offset;
 
         let font_size = this.reduce_font(ctx, title, settings.font_size, ctx.canvas.width / 1.15);
 
@@ -133,13 +134,34 @@ export const draw = {
 
     draw_flag_toggle: function (ctx) {
 
-        const flag_color = game.flag_mode ? "red" : "black";
+        const flag_color = game.flag_mode ? "red" : settings.font_color;
 
-        let font_size = this.reduce_font(ctx, 'F', settings.font_size,  100);
+        const font_size = this.reduce_font(ctx, 'F', settings.font_size,  100);
 
-        ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+        ctx.clearRect(0, 0, 100, ctx.canvas.height);
         ctx.fillStyle = flag_color;
         ctx.fillText(`F`, 20, 42);
+
+    },
+
+    draw_mines_left (ctx) {
+
+        const txt = `B: ${game.mines_left}`;
+        const offset = settings.offset;
+        const padding = settings.padding;
+
+        const w = ctx.measureText(txt).width;
+        const center_pos = ctx.canvas.width / 2 - w / 2;
+
+        const font_size = this.reduce_font(ctx, txt, settings.font_size,  ctx.canvas.width / 2);
+
+        ctx.clearRect(center_pos - padding * 2, 0, w + padding * 5, ctx.canvas.height);
+
+        ctx.fillStyle = settings.font_color;
+        ctx.fillText(txt, center_pos, 42);
+
+        ctx.fillStyle = "white";
+        ctx.fillText(txt, center_pos + offset, 42 + offset);
 
     },
 
