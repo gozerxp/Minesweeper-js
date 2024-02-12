@@ -15,7 +15,7 @@ export const game_mode = {
         mines: 99,
     },
 
-    current_mode: 2,
+    current_mode: 1,
 
     change_mode: function (new_mode) {
 

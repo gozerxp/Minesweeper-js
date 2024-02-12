@@ -100,7 +100,7 @@ export const draw = {
                     
                     ctx.fillStyle = x !== hover_pos.x 
                                         || y !== hover_pos.y 
-                                            || array[x][y].flagged ? 
+                                            || (array[x][y].flagged && !game.flag_mode) ? 
                                                 settings.block_color : settings.hover_color;
                     ctx.fillRect(x * x_size, y * y_size, x_size, y_size);
 
@@ -202,7 +202,7 @@ export const draw = {
 
             }
 
-            if (!array[x][y].uncovered && !array[x][y].flagged) {
+            if (!array[x][y].uncovered && (!array[x][y].flagged || game.flag_mode)) {
 
                 cell_x = x * x_size;
                 cell_y = y * y_size;
