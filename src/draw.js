@@ -162,18 +162,21 @@ export const draw = {
 
     draw_flag_toggle: function (ctx) {
 
+        const padding = 20;
+
         const flag_color = game.flag_mode ? settings.flag_color : settings.font_color;
 
         const font_size = this.reduce_font(ctx, settings.flag_symbol, settings.font_size, settings.symbol_font, 100);
 
         ctx.clearRect(0, 0, 100, ctx.canvas.height);
         ctx.fillStyle = flag_color;
-        ctx.fillText(settings.flag_symbol, 20, ctx.canvas.height / 2 + font_size / 3);
+        ctx.fillText(settings.flag_symbol, padding, ctx.canvas.height / 2 + font_size / 3);
 
+        ctx.clearRect(ctx.canvas.width - 100, 0, 100, ctx.canvas.height);
         ctx.fillStyle = settings.font_color;
         const reset_icon = settings.reset_symbol;
         const w = ctx.measureText(reset_icon).width;
-        ctx.fillText(reset_icon, ctx.canvas.width - w - 20, ctx.canvas.height / 2 + font_size / 3);
+        ctx.fillText(reset_icon, ctx.canvas.width - w - padding, ctx.canvas.height / 2 + font_size / 3);
 
     },
 

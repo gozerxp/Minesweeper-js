@@ -80,7 +80,7 @@ function open_mode_select(ctx, x, y) {
 
 function toggle_flag(ctx, x, y) {
 
-    const width = 75;
+    const width = 65;
 
     //flag mode button
     if (x >= 0 && x <= width && y >= 0) {
@@ -93,6 +93,7 @@ function toggle_flag(ctx, x, y) {
 
     //reset button
     if (x >= ctx.canvas.width - width && x <= ctx.canvas.width && y >= 0) {
+
         game.reset();
         alert.active = false;
         draw.resize_canvas(game_ctx, score_ctx, title_ctx);
