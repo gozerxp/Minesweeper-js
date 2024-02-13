@@ -82,11 +82,22 @@ function toggle_flag(ctx, x, y) {
 
     const width = 75;
 
-    if (x < 0 || x > width || y < 0)
-        return;
+    //flag mode button
+    if (x >= 0 && x <= width && y >= 0) {
 
-    game.flag_mode = !game.flag_mode;
-    draw.draw_flag_toggle(ctx);
+        game.flag_mode = !game.flag_mode;
+        draw.draw_flag_toggle(ctx);
+    
+        return;
+    }
+
+    //reset button
+    if (x >= ctx.canvas.width - width && x <= ctx.canvas.width && y >= 0) {
+        game.reset();
+        alert.active = false;
+        draw.resize_canvas(game_ctx, score_ctx, title_ctx);
+    }
+
 
 }
 

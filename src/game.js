@@ -249,6 +249,13 @@ export const game = {
             }
         }
 
+    },
+
+    reset_toggle: function() {
+
+        this.reset();
+        alert.active = false;
+
     }
 
 };

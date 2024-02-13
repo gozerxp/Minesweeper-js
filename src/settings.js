@@ -36,6 +36,7 @@ export const settings = {
     flag_symbol: '🏲',
     mode_select_symbol: '☰',
     mode_select_x: '🗙',
+    reset_symbol: '⭮',
 
     colors: {
         1: "blue",

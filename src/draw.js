@@ -170,6 +170,11 @@ export const draw = {
         ctx.fillStyle = flag_color;
         ctx.fillText(settings.flag_symbol, 20, ctx.canvas.height / 2 + font_size / 3);
 
+        ctx.fillStyle = settings.font_color;
+        const reset_icon = settings.reset_symbol;
+        const w = ctx.measureText(reset_icon).width;
+        ctx.fillText(reset_icon, ctx.canvas.width - w - 20, ctx.canvas.height / 2 + font_size / 3);
+
     },
 
     draw_mines_left (ctx) {
