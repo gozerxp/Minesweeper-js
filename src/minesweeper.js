@@ -63,8 +63,10 @@ function open_mode_select(ctx, x, y) {
     
     mode_select.active = !mode_select.active;
 
+    
     draw.draw_game(ctx);
     mode_select.draw(ctx);
+    draw.draw_titlebar(title_ctx);
 
     if (mode_select.mode_change) {
 

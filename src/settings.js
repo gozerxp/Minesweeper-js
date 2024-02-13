@@ -35,6 +35,7 @@ export const settings = {
     mine_symbol: '🕱',
     flag_symbol: '🏲',
     mode_select_symbol: '☰',
+    mode_select_x: '🗙',
 
     colors: {
         1: "blue",

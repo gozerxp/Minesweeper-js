@@ -1,6 +1,7 @@
 import { settings } from "./settings.js";
 import { game } from "./game.js";
 import { alert } from "./alert.js";
+import { mode_select } from "./game_mode.js";
 
 const hover_pos = {
     x: null,
@@ -55,12 +56,14 @@ export const draw = {
         font_size = this.reduce_font(ctx, settings.mode_select_symbol, settings.font_size, settings.symbol_font, 100);
 
         const icon_pos = {x: 20, y: ctx.canvas.height / 2 + font_size / 2.5};
+
+        const icon = mode_select.active ? settings.mode_select_x : settings.mode_select_symbol;
         
         ctx.fillStyle = settings.font_color;
-        ctx.fillText(settings.mode_select_symbol, icon_pos.x, icon_pos.y);
+        ctx.fillText(icon, icon_pos.x, icon_pos.y);
 
-        ctx.fillStyle = "white";
-        ctx.fillText(settings.mode_select_symbol, icon_pos.x + offset + 1, icon_pos.y + offset + 1);
+        ctx.fillStyle = mode_select.active ? "red" : "white";
+        ctx.fillText(icon, icon_pos.x + offset + 1, icon_pos.y + offset + 1);
 
     },
 
