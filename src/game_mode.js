@@ -1,4 +1,3 @@
-import { game } from "./game.js";
 import { settings } from "./settings.js";
 import { draw } from "./draw.js";
 
@@ -19,7 +18,7 @@ export const game_mode = {
         mines: 99,
     },
 
-    current_mode: 0,
+    current_mode: Number(localStorage.getItem("mode")) || 0,
 
     change_mode: function (new_mode) {
 
@@ -28,6 +27,9 @@ export const game_mode = {
 
         if (this.current_mode !== new_mode) {
             this.current_mode = new_mode;
+
+            //save mode for future games
+            localStorage.setItem("mode", this.current_mode);
             return true;
         }
 

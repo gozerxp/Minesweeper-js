@@ -199,7 +199,11 @@ export const draw = {
         let new_txt = '';
 
         for(const char of num_str) {
-            new_txt += txt_numbers[parseInt(char)];
+            if (char === '-') {
+                new_txt += '-';
+            } else {
+                new_txt += txt_numbers[parseInt(char)];
+            }
         }
 
         return new_txt;

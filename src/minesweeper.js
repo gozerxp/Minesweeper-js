@@ -92,13 +92,13 @@ function toggle_flag(ctx, x, y) {
 
 function hover(ctx, array, x, y) {
 
-    if (game.game_over || alert.active) 
-        return;
-
     if (mode_select.active) {
         mode_select.hover_text(ctx, x, y - settings.bar_height + settings.padding * 2);
         return;
     }
+
+    if (game.game_over || alert.active) 
+    return;
 
     const mouse_position = get_mouse_coordinates(ctx, array, x, y);
     draw.draw_cell_hover(ctx, mouse_position.x, mouse_position.y);
