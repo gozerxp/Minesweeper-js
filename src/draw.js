@@ -55,9 +55,11 @@ export const draw = {
 
         font_size = this.reduce_font(ctx, settings.mode_select_symbol, settings.font_size, settings.symbol_font, 100);
 
-        const icon_pos = {x: 20, y: ctx.canvas.height / 2 + font_size / 2.5};
+        const icon_pos = {x: 15, y: ctx.canvas.height / 2 + font_size / 2.5};
 
         const icon = mode_select.active ? settings.mode_select_x : settings.mode_select_symbol;
+        
+        icon_pos.y += mode_select.active ? -3 : 0;
         
         ctx.fillStyle = settings.font_color;
         ctx.fillText(icon, icon_pos.x, icon_pos.y);
