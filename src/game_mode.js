@@ -158,7 +158,7 @@ export const mode_select = {
 
     },
 
-    confirm_select: function(ctx, x, y) {
+    confirm_select: function(x, y) {
 
         if (!this.active)
             return;

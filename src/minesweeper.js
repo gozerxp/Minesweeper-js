@@ -108,7 +108,7 @@ function hover(ctx, array, x, y) {
 function input(ctx, array, x, y) {
 
     if (mode_select.active) {
-        mode_select.confirm_select(ctx, x, y - settings.bar_height + settings.padding * 2);
+        mode_select.confirm_select(x, y - settings.bar_height + settings.padding * 2);
     }
 
     else if (alert.active) {

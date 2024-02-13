@@ -200,6 +200,7 @@ export const game = {
 
         if (flag) {
             alert.draw(["You win!"]);
+            this.flag_mines(array);
             this.game_over = true;
         }
 
@@ -235,6 +236,19 @@ export const game = {
                     array[x][y].uncovered = true;
             }
         }
+    },
+
+    flag_mines: function (array) {
+        const rows = this.size.width;
+        const columns = this.size.height;
+
+        for (let x = 0; x < rows; x++) {
+            for (let y = 0; y < columns; y++) {
+                if (array[x][y].is_mine)
+                    array[x][y].flagged = true;
+            }
+        }
+
     }
 
 };
