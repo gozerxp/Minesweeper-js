@@ -177,7 +177,7 @@ export const game = {
             this.tripped_mine.x = x;
             this.tripped_mine.y = y;
             this.uncover_mines(array);
-            alert.draw(["Game Over!"]);
+            alert.draw("Game Over!");
             return;
         }
 
@@ -199,11 +199,11 @@ export const game = {
         }
 
         if (flag) {
-            alert.draw(["You win!"]);
+            alert.draw("You win!");
+            this.mines_left = 0;
             this.flag_mines(array);
             this.game_over = true;
         }
-
 
     },
 

@@ -26,6 +26,7 @@ export const game_mode = {
             return false;
 
         if (this.current_mode !== new_mode) {
+
             this.current_mode = new_mode;
 
             //save mode for future games
@@ -96,7 +97,7 @@ export const mode_select = {
 
             const text_size = ctx.measureText(this.categories[i].text).width;
             const text_pos = [ctx.canvas.width / 2 - text_size / 2,
-                                ctx.canvas.height / 2  - h / 2 + margin];
+                                position[1] + margin * 2.5];
             text_pos[1] += i * (font_size / 2 + margin * 2);
 
             this.categories[i].size = {
@@ -113,7 +114,7 @@ export const mode_select = {
 
             if (this.selected === i) {
                 text_color = settings.select_mode_color;
-            } else if(this.hover ===i) {
+            } else if(this.hover === i) {
                 text_color = settings.select_mode_hover_color;
             } else {
                 text_color = "white";
@@ -147,9 +148,6 @@ export const mode_select = {
                 
             } 
         }
-
-        if (this.hover === -1)
-            return;
 
         if (this.hover !== previous_hover) {
             draw.draw_game(ctx);

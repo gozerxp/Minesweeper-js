@@ -25,11 +25,15 @@ export const draw = {
 
         this.draw_titlebar(title_ctx);
         this.draw_flag_toggle(score_ctx);
-        this.draw_mines_left(score_ctx)
+        this.draw_mines_left(score_ctx);
         this.draw_game(game_ctx);
 
         if (alert.active) {
             alert.draw();
+        }
+
+        if (mode_select.active) {
+            mode_select.draw(game_ctx);
         }
 
     },
