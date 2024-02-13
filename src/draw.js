@@ -39,9 +39,9 @@ export const draw = {
 
         const offset = settings.offset;
 
-        let font_size = this.reduce_font(ctx, title, settings.font_size, settings.title_font, ctx.canvas.width / 1.15);
+        let font_size = this.reduce_font(ctx, title, settings.font_size, settings.title_font, ctx.canvas.width / 1.5);
 
-        let y = (ctx.canvas.height / 2) + font_size / 3;
+        let y = (ctx.canvas.height / 2) + font_size / 2;
         let x = ctx.canvas.width / 2 - (ctx.measureText(title).width / 2);
 
         ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
@@ -51,6 +51,16 @@ export const draw = {
 
         ctx.fillStyle = "white";
         ctx.fillText(title, x + offset, y + offset);
+
+        font_size = this.reduce_font(ctx, settings.mode_select_symbol, settings.font_size, settings.symbol_font, 100);
+
+        const icon_pos = {x: 20, y: ctx.canvas.height / 2 + font_size / 2.5};
+        
+        ctx.fillStyle = settings.font_color;
+        ctx.fillText(settings.mode_select_symbol, icon_pos.x, icon_pos.y);
+
+        ctx.fillStyle = "white";
+        ctx.fillText(settings.mode_select_symbol, icon_pos.x + offset + 1, icon_pos.y + offset + 1);
 
     },
 
@@ -79,9 +89,10 @@ export const draw = {
                 
                     if (array[x][y].is_mine) {
                         //draw mine
-                        ctx.fillStyle = game.tripped_mine.x === x 
-                                            && game.tripped_mine.y ===y ?
-                                                settings.explode_color : settings.uncovered_mine_color;
+                        ctx.fillStyle = game.tripped_mine.x === x && game.tripped_mine.y ===y ?
+                                                settings.tripped_mine_color : 
+                                                array[x][y].flagged ? 
+                                                    settings.flagged_mine_color : settings.uncovered_mine_color;
                         ctx.fillRect(x * x_size, y * y_size, x_size, y_size);
                         
                         ctx.fillStyle = "black";
@@ -135,20 +146,20 @@ export const draw = {
         let x_pos = x * x_size + x_size / 2 - ctx.measureText(settings.flag_symbol).width / 2;
         let y_pos = y * y_size + y_size / 2 + font_size / 2.5;
 
-        ctx.fillStyle = "red";
+        ctx.fillStyle = settings.flag_color;
         ctx.fillText(settings.flag_symbol, x_pos, y_pos);
 
     },
 
     draw_flag_toggle: function (ctx) {
 
-        const flag_color = game.flag_mode ? "red" : settings.font_color;
+        const flag_color = game.flag_mode ? settings.flag_color : settings.font_color;
 
         const font_size = this.reduce_font(ctx, settings.flag_symbol, settings.font_size, settings.symbol_font, 100);
 
         ctx.clearRect(0, 0, 100, ctx.canvas.height);
         ctx.fillStyle = flag_color;
-        ctx.fillText(settings.flag_symbol, 20, 42);
+        ctx.fillText(settings.flag_symbol, 20, ctx.canvas.height / 2 + font_size / 3);
 
     },
 
@@ -167,8 +178,8 @@ export const draw = {
         ctx.fillStyle = settings.font_color;
         ctx.fillText(txt, center_pos, 40);
 
-        //ctx.fillStyle = "white";
-        //ctx.fillText(txt, center_pos + offset, 42 + offset);
+        ctx.fillStyle = "white";
+        ctx.fillText(txt, center_pos + offset, 40 + offset);
 
         this.draw_flag_toggle(ctx);
 
@@ -190,7 +201,7 @@ export const draw = {
 
     },
 
-    draw_hover: function (ctx, x, y) {
+    draw_cell_hover: function (ctx, x, y) {
 
         let cell_x, cell_y;
 
@@ -238,7 +249,6 @@ export const draw = {
 
             hover_pos.x = x;
             hover_pos.y = y;
-
 
         }
 

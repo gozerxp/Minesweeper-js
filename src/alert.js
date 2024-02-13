@@ -17,7 +17,7 @@ export const alert = {
         if (!this.text.length)
             this.text = "sloane is leet";
 
-        const margin = 30;
+        const margin = settings.margin;
 
         let font_size = draw.reduce_font(ctx, txt, settings.font_size, settings.title_font, ctx.canvas.width / 1.2 - margin);
 
@@ -26,10 +26,10 @@ export const alert = {
 
         const size = [w + margin * 2, h + margin * 2];
         const position = [ctx.canvas.width / 2 - (size[0] / 2),
-                ctx.canvas.height / 2 - (size[1] / 2) + margin / 4];
+                ctx.canvas.height / 2 - size[1] / 2];
 
         const txt_position = [ctx.canvas.width / 2 - w / 2,
-                ctx.canvas.height / 2 + (font_size + h) / 3];
+                ctx.canvas.height / 2 + h / 2];
 
         ctx.globalAlpha = settings.alpha;
         ctx.fillStyle = settings.alert_color;
@@ -38,7 +38,7 @@ export const alert = {
         ctx.fill();
         ctx.globalAlpha = 1;
 
-        const offset = 2;
+        const offset = settings.offset;
         ctx.fillStyle = "black";
         ctx.fillText(`${txt}`, txt_position[0] + offset, txt_position[1] + offset);
 

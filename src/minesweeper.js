@@ -8,6 +8,7 @@ import { game } from "./game.js";
 import { draw } from "./draw.js";
 import { settings } from "./settings.js";
 import { alert } from "./alert.js";
+import { mode_select } from "./game_mode.js";
 
 const game_canvas = document.getElementById("game");
 export const game_ctx = game_canvas.getContext("2d");
@@ -34,24 +35,50 @@ font.load().then((font) => {
 
 font2.load().then((font) => {
     document.fonts.add(font);
+    draw.draw_titlebar(title_ctx);
     draw.draw_mines_left(score_ctx);
 });
 
 if (__touch_device__) {
     game_canvas.ontouchstart = (e) => input(game_ctx, game.game_array, e.pageX, e.pageY);
     score_canvas.ontouchstart = (e) => toggle_flag(score_ctx, e.pageX, e.pageY);
+    title_canvas.ontouchstart = (e) => open_mode_select(game_ctx, e.pageX, e.pageY);
 } else {
     game_canvas.onclick = (e) => input(game_ctx, game.game_array, e.clientX, e.clientY);
     game_canvas.onmousemove = (e) => hover(game_ctx, game.game_array, e.clientX, e.clientY);
     score_canvas.onclick = (e) => toggle_flag(score_ctx, e.clientX, e.clientY);
+    title_canvas.onclick = (e) => open_mode_select(game_ctx, e.clientX, e.clientY);
 }
 
 window.onresize = () => draw.resize_canvas(game_ctx, score_ctx, title_ctx);
 
+function open_mode_select(ctx, x, y) {
+    
+    const width = 75;
+
+    if (x < 0 || x > width || y < 0)
+        return;
+
+    alert.active = false;
+    
+    mode_select.active = !mode_select.active;
+
+    draw.draw_game(ctx);
+    mode_select.draw(ctx);
+
+    if (mode_select.mode_change) {
+
+        mode_select.mode_change = false;
+        game.reset();
+        draw.resize_canvas(game_ctx, score_ctx, title_ctx);
+    }
+
+
+}
+
 function toggle_flag(ctx, x, y) {
 
     const width = 75;
-    const height = ctx.canvas.height;
 
     if (x < 0 || x > width || y < 0)
         return;
@@ -66,14 +93,23 @@ function hover(ctx, array, x, y) {
     if (game.game_over || alert.active) 
         return;
 
+    if (mode_select.active) {
+        mode_select.hover_text(ctx, x, y - settings.bar_height + settings.padding * 2);
+        return;
+    }
+
     const mouse_position = get_mouse_coordinates(ctx, array, x, y);
-    draw.draw_hover(ctx, mouse_position.x, mouse_position.y);
+    draw.draw_cell_hover(ctx, mouse_position.x, mouse_position.y);
 
 }
 
 function input(ctx, array, x, y) {
 
-    if (alert.active) {
+    if (mode_select.active) {
+        mode_select.confirm_select(ctx, x, y - settings.bar_height + settings.padding * 2);
+    }
+
+    else if (alert.active) {
     
         alert.active = false;
     
@@ -89,6 +125,9 @@ function input(ctx, array, x, y) {
     
     if (alert.active)
         alert.draw();
+
+    if (mode_select.active) 
+        mode_select.draw(ctx);
 
 }
 

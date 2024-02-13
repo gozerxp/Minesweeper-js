@@ -5,6 +5,7 @@ export const settings = {
     min_height: 400,
     max_width: 1200,
     padding: 4,
+    margin: 30,
 
     title: "Minesweeper.js",
 
@@ -13,18 +14,27 @@ export const settings = {
     font_color: "black",
     grid_color: "black",
     font_size: 34,
-    offset: 3,
+    offset: -3,
 
     block_color: "rgb(50, 125, 200)",
     hover_color: "rgb(75, 150, 225)",
-    explode_color: "red",
-    uncovered_mine_color: "darkorange",
+
+    tripped_mine_color: "red",
+    uncovered_mine_color: "orange",
+    flagged_mine_color: "yellow",
+
+    flag_color: "red",
+
+    select_mode_color: "limegreen",
+    select_mode_hover_color: "yellow",
+
     alert_color: "black",
     alpha: .75,
     corner_radius: 15,
 
     mine_symbol: '🕱',
     flag_symbol: '🏲',
+    mode_select_symbol: '☰',
 
     colors: {
         1: "blue",
