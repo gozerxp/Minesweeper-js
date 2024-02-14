@@ -102,13 +102,19 @@ export const draw = {
                                                 settings.tripped_mine_color : 
                                                 array[x][y].flagged ? 
                                                     settings.flagged_mine_color : settings.uncovered_mine_color;
-                        ctx.fillRect(x * x_size, y * y_size, x_size, y_size);
-                        
-                        ctx.fillStyle = "black";
+                        ctx.fillRect(x * x_size, y * y_size, x_size, y_size);                        
+                        ctx.fillStyle = settings.font_color;
 
-                        const font_increase = 15;
-                        ctx.font = `${font_size + font_increase}px '${settings.symbol_font}'`;
-                        ctx.fillText(settings.mine_symbol, x_pos - (font_increase / 2), y_pos + (font_increase / 4));
+                        if (array[x][y].flagged) {
+
+                            this.draw_cell_flag(ctx, x, y, false);
+
+                        } else {
+
+                            const font_increase = 15;
+                            ctx.font = `${font_size + font_increase}px '${settings.symbol_font}'`;
+                            ctx.fillText(settings.mine_symbol, x_pos - (font_increase / 2), y_pos + (font_increase / 4));
+                        }
 
                     }
 
@@ -142,7 +148,7 @@ export const draw = {
 
     },
 
-    draw_cell_flag: function (ctx, x, y) {
+    draw_cell_flag: function (ctx, x, y, bool_color=true) {
 
         const x_size = ctx.canvas.width / game.size.width;
         const y_size = ctx.canvas.height / game.size.height;
@@ -152,7 +158,7 @@ export const draw = {
         let x_pos = x * x_size + x_size / 2 - ctx.measureText(settings.flag_symbol).width / 2;
         let y_pos = y * y_size + y_size / 2 + font_size / 2.5;
 
-        ctx.fillStyle = settings.flag_color;
+        ctx.fillStyle = bool_color ? settings.flag_color : settings.font_color;
         ctx.fillText(settings.flag_symbol, x_pos, y_pos);
 
     },
