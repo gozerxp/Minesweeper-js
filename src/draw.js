@@ -83,7 +83,7 @@ export const draw = {
         const x_size = ctx.canvas.width / rows;
         const y_size = ctx.canvas.height / columns;
 
-        let font_size = this.reduce_font(ctx, '#', settings.font_size, settings.title_font, x_size / 2.5);
+        const font_size = this.reduce_font(ctx, '#', settings.font_size, settings.title_font, x_size / 2.5);
 
         ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
 
@@ -135,10 +135,7 @@ export const draw = {
                 
                 }
 
-                let cell_x = x * x_size;
-                let cell_y = y * y_size;
-
-                this.draw_cell_outline(ctx, cell_x, cell_y, x_size, y_size);
+                this.draw_cell_outline(ctx, x * x_size, y * y_size, x_size, y_size);
 
             }
         }

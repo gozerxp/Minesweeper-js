@@ -3,16 +3,19 @@ import { draw } from "./draw.js";
 
 export const game_mode = {
     0: {
+        txt: "Easy",
         width: 9,
         height: 9,
         mines: 15,
     },
     1: {
+        txt: "Intermediate",
         width: 16,
         height: 16,
         mines: 40,
     },
     2: {
+        txt: "Expert",
         width: 30,
         height: 16,
         mines: 99,
@@ -37,22 +40,9 @@ export const game_mode = {
         return false;
     },
 
-    get_mode: function () {
-        return this[this.current_mode];
+    get_mode: function (mode = this.current_mode) {
+        return this[mode];
     },
-
-    get_mode_txt: function (num) {
-        switch (num) {
-            case 0:
-                return "Easy";
-            case 1:
-                return "Intermediate";
-            case 2:
-                return "Expert";
-            default:
-                return "Custom";
-        }
-    }
 };
 
 export const mode_select = {
@@ -71,7 +61,7 @@ export const mode_select = {
 
         this.categories = [];
         for (let i = 0; i < 3; i++) {
-            this.categories.push({text: game_mode.get_mode_txt(i)});
+            this.categories.push({text: game_mode.get_mode(i).txt});
         }
 
         const margin = settings.margin;
