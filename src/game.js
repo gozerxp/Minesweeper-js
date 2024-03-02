@@ -221,7 +221,7 @@ export const game = {
         }
 
         //now we can count adjacent mines
-        this.count_adj_mines(this.game_array);
+        this.count_adj_mines(array);
 
     },
 
