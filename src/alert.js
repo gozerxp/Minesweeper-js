@@ -7,7 +7,7 @@ export const alert = {
     active: false,
     text: '',
 
-    draw: function (txt = this.text) {
+    draw: function(txt = this.text) {
 
         const ctx = game_ctx;
 

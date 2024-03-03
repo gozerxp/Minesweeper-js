@@ -23,7 +23,7 @@ export const game_mode = {
 
     current_mode: Number(localStorage.getItem("mode")) || 0,
 
-    change_mode: function (new_mode) {
+    change_mode: function(new_mode) {
 
         if (new_mode < 0 || new_mode > 2)
             return false;
@@ -40,7 +40,7 @@ export const game_mode = {
         return false;
     },
 
-    get_mode: function (mode = this.current_mode) {
+    get_mode: function(mode = this.current_mode) {
         return this[mode];
     },
 };

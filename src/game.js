@@ -15,7 +15,7 @@ export const game = {
     size: {
         width: 0,
         height: 0,
-        update: function (width, height) {
+        update: function(width, height) {
             this.width = width;
             this.height = height;
         }
@@ -36,7 +36,7 @@ export const game = {
                     y: null
                 },
 
-    reset: function () {
+    reset: function() {
 
         console.clear();
         const get_mode = game_mode.get_mode();
@@ -163,14 +163,14 @@ export const game = {
         array[x][y].uncovered = true;
 
         if (array[x][y].adjecent_mines === 0 && !array[x][y].is_mine) {
-            spread_empty_cells(array, x, y, rows, columns);
+            this.spread_empty_cells(array, x, y, rows, columns);
         }
 
-        this.check_game_over (array, x, y);
+        this.check_game_over(array, x, y);
 
     },
 
-    check_game_over: function (array, x, y) {
+    check_game_over: function(array, x, y) {
 
         if (array[x][y].is_mine) {
             this.game_over = true;
@@ -225,7 +225,7 @@ export const game = {
 
     },
 
-    uncover_mines: function (array) {
+    uncover_mines: function(array) {
 
         const rows = this.size.width;
         const columns = this.size.height;
@@ -238,7 +238,7 @@ export const game = {
         }
     },
 
-    flag_mines: function (array) {
+    flag_mines: function(array) {
         const rows = this.size.width;
         const columns = this.size.height;
 
@@ -256,42 +256,42 @@ export const game = {
         this.reset();
         alert.active = false;
 
+    },
+
+    spread_empty_cells: function(array, x, y, rows, columns) {
+
+        const empty_cells = [[x, y]];
+
+        while (empty_cells.length > 0) {
+
+            for (let z = 0; z < DIRECTIONS.length; z++) {
+
+                let dir_x = empty_cells[0][0] + DIRECTIONS[z][0];
+                let dir_y = empty_cells[0][1] + DIRECTIONS[z][1];
+
+                if (dir_x < 0 || dir_x >= rows || dir_y < 0 || dir_y >= columns)
+                    continue;
+
+                if (array[dir_x][dir_y].uncovered)
+                    continue;
+
+                if (array[dir_x][dir_y].flagged)
+                    continue;
+
+                array[dir_x][dir_y].uncovered = true; 
+
+                //if new cell is also blank then add it to the list
+                if (array[dir_x][dir_y].adjecent_mines === 0 
+                    && !array[dir_x][dir_y].is_mine
+                    && !array[dir_x][dir_y].flagged)
+                    empty_cells.push([dir_x, dir_y]);;
+                
+            }
+
+        empty_cells.shift();
+
+        }
+
     }
 
 };
-
-function spread_empty_cells (array, x, y, rows, columns) {
-
-    const empty_cells = [[x, y]];
-
-    while (empty_cells.length > 0) {
-
-        for (let z = 0; z < DIRECTIONS.length; z++) {
-
-            let dir_x = empty_cells[0][0] + DIRECTIONS[z][0];
-            let dir_y = empty_cells[0][1] + DIRECTIONS[z][1];
-
-            if (dir_x < 0 || dir_x >= rows || dir_y < 0 || dir_y >= columns)
-                continue;
-
-            if (array[dir_x][dir_y].uncovered)
-                continue;
-
-            if (array[dir_x][dir_y].flagged)
-                continue;
-
-            array[dir_x][dir_y].uncovered = true; 
-
-            //if new cell is also blank then add it to the list
-            if (array[dir_x][dir_y].adjecent_mines === 0 
-                && !array[dir_x][dir_y].is_mine
-                && !array[dir_x][dir_y].flagged)
-                empty_cells.push([dir_x, dir_y]);;
-            
-        }
-
-    empty_cells.shift();
-
-    }
-
-}

@@ -10,7 +10,7 @@ const hover_pos = {
 
 export const draw = {
     
-    resize_canvas: function (game_ctx, score_ctx, title_ctx) {
+    resize_canvas: function(game_ctx, score_ctx, title_ctx) {
 
         const aspect_ratio = game.size.width / game.size.height;
 
@@ -38,7 +38,7 @@ export const draw = {
 
     },
 
-    draw_titlebar: function (ctx) {
+    draw_titlebar: function(ctx) {
 
         const title = settings.title;
 
@@ -73,7 +73,7 @@ export const draw = {
 
     },
 
-    draw_game: function (ctx) {
+    draw_game: function(ctx) {
 
         const array = game.game_array;
 
@@ -148,7 +148,7 @@ export const draw = {
 
     },
 
-    draw_cell_flag: function (ctx, x, y, bool_color=true) {
+    draw_cell_flag: function(ctx, x, y, bool_color=true) {
 
         const x_size = ctx.canvas.width / game.size.width;
         const y_size = ctx.canvas.height / game.size.height;
@@ -163,7 +163,7 @@ export const draw = {
 
     },
 
-    draw_flag_toggle: function (ctx) {
+    draw_flag_toggle: function(ctx) {
 
         const padding = 20;
 
@@ -183,7 +183,7 @@ export const draw = {
 
     },
 
-    draw_mines_left (ctx) {
+    draw_mines_left: function(ctx) {
 
         const txt = `${settings.mine_symbol} ${this.generate_font_numbers(game.mines_left)}`;
         const offset = settings.offset;
@@ -205,7 +205,7 @@ export const draw = {
 
     },
 
-    generate_font_numbers(num) {
+    generate_font_numbers: function(num) {
 
         const txt_numbers = ['🯰', '🯱', '🯲', '🯳', '🯴', '🯵', '🯶', '🯷', '🯸', '🯹'];
 
@@ -225,7 +225,7 @@ export const draw = {
 
     },
 
-    draw_cell_hover: function (ctx, x, y) {
+    draw_cell_hover: function(ctx, x, y) {
 
         let cell_x, cell_y;
 
@@ -278,7 +278,7 @@ export const draw = {
 
     },
 
-    draw_cell_outline: function (ctx, x, y, x_size, y_size) {
+    draw_cell_outline: function(ctx, x, y, x_size, y_size) {
 
         ctx.strokeStyle = settings.grid_color;
         ctx.lineWidth = 1;
@@ -289,7 +289,7 @@ export const draw = {
 
     },
 
-    reduce_font: function (ctx, text, font_size, font_face, max_size) {
+    reduce_font: function(ctx, text, font_size, font_face, max_size) {
 
         ctx.font = `${font_size}px '${font_face}'`;
 
