@@ -185,7 +185,7 @@ export const draw = {
 
     draw_mines_left: function(ctx) {
 
-        const txt = `${settings.mine_symbol} ${this.generate_font_numbers(game.mines_left)}`;
+        const txt = `${settings.mine_symbol}  ${this.generate_font_numbers(game.mines_left)}`;
         const offset = settings.offset;
 
         const font_size = this.reduce_font(ctx, txt, settings.font_size, settings.symbol_font, ctx.canvas.width / 2);
@@ -198,7 +198,7 @@ export const draw = {
         ctx.fillStyle = settings.font_color;
         ctx.fillText(txt, center_pos, 40);
 
-        ctx.fillStyle = "white";
+        ctx.fillStyle = game.mines_left < 0 ? "red" : "white";
         ctx.fillText(txt, center_pos + offset, 40 + offset);
 
         this.draw_flag_toggle(ctx);
