@@ -209,9 +209,6 @@ export const game = {
 
     check_first_move: function(array, x, y) {
 
-        const rows = this.size.width;
-        const columns = this.size.height;
-
         //if first move is a mine, move it to the first available cell
         while (array[x][y].is_mine) {
 
@@ -239,6 +236,7 @@ export const game = {
     },
 
     flag_mines: function(array) {
+
         const rows = this.size.width;
         const columns = this.size.height;
 
