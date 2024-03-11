@@ -28,6 +28,9 @@ export const draw = {
         this.draw_mines_left(score_ctx);
         this.draw_game(game_ctx);
 
+        hover_pos.x = null;
+        hover_pos.y = null;
+
         if (alert.active) {
             alert.draw();
         }
