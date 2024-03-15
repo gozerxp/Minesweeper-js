@@ -6,13 +6,13 @@ export const game_mode = {
         txt: "Easy",
         width: 9,
         height: 9,
-        mines: 20,
+        mines: 15,
     },
     1: {
         txt: "Intermediate",
         width: 16,
         height: 16,
-        mines: 45,
+        mines: 40,
     },
     2: {
         txt: "Expert",
