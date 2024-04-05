@@ -31,10 +31,7 @@ export const game = {
 
     // these coordinates are used to highlight 
     // the mine that lost the game.
-    tripped_mine: {
-                    x: null, 
-                    y: null
-                },
+    tripped_mine: { x: null, y: null },
 
     reset: function() {
 
